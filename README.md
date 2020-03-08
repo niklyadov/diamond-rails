@@ -1,2 +1,2 @@
 # diamond-rails
-A simple browser game
+A simple game on JS
