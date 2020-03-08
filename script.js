@@ -30,7 +30,7 @@ function loadImages(sources, callback)
     }
   }
 
-  var sources = 
+  var sources =
   {
     rail:     './tex/rail.png',
     rock0:    './tex/rock0.png',
@@ -44,18 +44,21 @@ function loadImages(sources, callback)
     return Math.floor(Math.random() * Math.floor(max));
   }
 
-
 document.addEventListener('keydown', function(event)
 {
-    if (event.code == 'ArrowRight' && playerX < 3) 
+    switch (event.code )
     {
-        playerX++;
-    } else if(event.code == 'ArrowLeft' && playerX > 0)
-    {
-        playerX--;
-    } else if(event.code == "KeyP")
-    {
-        pause = !pause;
+      case 'ArrowLeft':
+        if(playerX > 0)
+            playerX--;
+      break;
+      case 'ArrowRight':
+        if(playerX < 3)
+            playerX++;
+      break;
+      case 'KeyP':
+              pause = !pause;
+      break;
     }
   });
 document.addEventListener("DOMContentLoaded", function ()
@@ -75,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function ()
     var rockX = getRandomInt(4);
     var diamondX = getRandomInt(4);
 
-    var rockid = getRandomInt(2);
+    var rockId = getRandomInt(2);
 
     setInterval(function()
     {
@@ -89,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function ()
 
         loadImages(sources, function(images)
         {
-
             context.clearRect(0, 0, canvas.width, canvas.height);
 
             for(var x = 0; x < 4; x++)
@@ -98,8 +100,9 @@ document.addEventListener("DOMContentLoaded", function ()
                     context.drawImage(images.rail, x * scaleItem, y * scaleItem + dy - 2, scaleItem, scaleItem);
                 }
             }
+
             context.drawImage(images.player, playerX * scaleItem, 2 * scaleItem, scaleItem, scaleItem);
-            context.drawImage(rockid == 0 ? images.rock0 : images.rock1, rockX * scaleItem, rockY, scaleItem, scaleItem);
+            context.drawImage((rockId == 0) ? images.rock0 : images.rock1, rockX * scaleItem, rockY, scaleItem, scaleItem);
             context.drawImage(images.diamond, diamondX * scaleItem, diamondY, scaleItem, scaleItem);
 
             context.fillText(score, (playerX * scaleItem) + scaleItem/2, (3 * scaleItem) - scaleItem / 4);
@@ -108,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function ()
             {
                 rockX = getRandomInt(4);
                 rockY = -scaleItem;
-                rockid = getRandomInt(2);
+                rockId = getRandomInt(2);
             }
             if(diamondY > canvas.height || (rockY + scaleItem/2 > diamondY && rockY < diamondY + scaleItem/2 && rockX == diamondX))
             {
@@ -118,12 +121,12 @@ document.addEventListener("DOMContentLoaded", function ()
 
             dy = -dy;
 
-            if(rockY + scaleItem > 2 * scaleItem && rockY < 3 * scaleItem && rockX == playerX) 
+            if(rockY + scaleItem > 2 * scaleItem && rockY < 3 * scaleItem && rockX == playerX)
             {
-              pause = true;
+                pause = true;
                 document.location.reload(true);
             }
-            if(diamondY + scaleItem > 2 * scaleItem && diamondY < 3 * scaleItem && diamondX == playerX) 
+            if(diamondY + scaleItem > 2 * scaleItem && diamondY < 3 * scaleItem && diamondX == playerX)
             {
                 score++;
                 diamondX = getRandomInt(4);
