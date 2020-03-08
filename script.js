@@ -120,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function ()
 
             if(rockY + scaleItem > 2 * scaleItem && rockY < 3 * scaleItem && rockX == playerX) 
             {
+              pause = true;
                 document.location.reload(true);
             }
             if(diamondY + scaleItem > 2 * scaleItem && diamondY < 3 * scaleItem && diamondX == playerX) 
