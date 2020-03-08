@@ -11,7 +11,6 @@ function loadImages(sources, callback)
     var images = {};
     var loadedImages = 0;
     var numImages = 0;
-    // get num of sources
     for(var src in sources)
     {
       numImages++;
@@ -87,8 +86,8 @@ document.addEventListener("DOMContentLoaded", function ()
             return;
         }
 
-        rockY    += 6;
-        diamondY += 4;
+        rockY    += 3;
+        diamondY += 2;
 
         loadImages(sources, function(images)
         {
@@ -123,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function ()
 
             if(rockY + scaleItem > 2 * scaleItem && rockY < 3 * scaleItem && rockX == playerX)
             {
+                alert("You lose. Score: " + score);
                 pause = true;
                 document.location.reload(true);
             }
@@ -133,5 +133,5 @@ document.addEventListener("DOMContentLoaded", function ()
                 diamondY = -scaleItem;
             }
         });
-    }, 100);
+    }, 50);
 });
