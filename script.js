@@ -4,7 +4,7 @@ var canvas = null;
 var scaleItem = 32;
 var playerX  = getRandomInt(4);
 var score = 0;
-var pause = false;
+var pause = true;
 
 function loadImages(sources, callback)
 {
@@ -55,7 +55,7 @@ document.addEventListener('keydown', function(event)
         if(playerX < 3)
             playerX++;
       break;
-      case 'KeyP':
+      default:
               pause = !pause;
       break;
     }
@@ -81,11 +81,6 @@ document.addEventListener("DOMContentLoaded", function ()
 
     setInterval(function()
     {
-        if(pause)
-        {
-            return;
-        }
-
         rockY    += 3;
         diamondY += 2;
 
@@ -131,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function ()
                 playerX     = getRandomInt(4);
                 score       = 0;
                 dy          = 2;
+                pause       = true;
             }
             if(diamondY + scaleItem > 2 * scaleItem && diamondY < 3 * scaleItem && diamondX == playerX)
             {
@@ -139,5 +135,9 @@ document.addEventListener("DOMContentLoaded", function ()
                 diamondY = -scaleItem;
             }
         });
+        if(pause)
+        {
+            return;
+        }
     }, 50);
 });
