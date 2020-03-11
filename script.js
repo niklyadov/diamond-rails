@@ -127,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function ()
                 rockId = getRandomInt(2);
                 diamondX = getRandomInt(4);
                 playerX  = getRandomInt(4);
+                dy = 2;
             }
             if(diamondY + scaleItem > 2 * scaleItem && diamondY < 3 * scaleItem && diamondX == playerX)
             {
