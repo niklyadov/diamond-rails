@@ -31,11 +31,11 @@ function loadImages(sources, callback)
 
   var sources =
   {
-    rail:     './tex/rail.png',
-    rock0:    './tex/rock0.png',
-    rock1:    './tex/rock1.png',
-    player:   './tex/player.png',
-    diamond:  './tex/diamond.png'
+    rail:     'https://anchovys.github.io/diamond-rails/tex/rail.png',
+    rock0:    'https://anchovys.github.io/diamond-rails/tex/rock0.png',
+    rock1:    'https://anchovys.github.io/diamond-rails/tex/rock1.png',
+    player:   'https://anchovys.github.io/diamond-rails/tex/player.png',
+    diamond:  'https://anchovys.github.io/diamond-rails/tex/diamond.png'
   };
 
   function getRandomInt(max)
