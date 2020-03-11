@@ -81,6 +81,11 @@ document.addEventListener("DOMContentLoaded", function ()
 
     setInterval(function()
     {
+        if(pause)
+        {
+            return;
+        }
+        
         rockY    += 3;
         diamondY += 2;
 
@@ -135,9 +140,5 @@ document.addEventListener("DOMContentLoaded", function ()
                 diamondY = -scaleItem;
             }
         });
-        if(pause)
-        {
-            return;
-        }
     }, 50);
 });
