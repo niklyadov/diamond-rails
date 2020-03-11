@@ -2,7 +2,7 @@
 var context = null;
 var canvas = null;
 var scaleItem = 32;
-var playerX  = getRandomInt(4);;
+var playerX  = getRandomInt(4);
 var score = 0;
 var pause = false;
 
@@ -123,7 +123,12 @@ document.addEventListener("DOMContentLoaded", function ()
             if(rockY + scaleItem > 2 * scaleItem && rockY < 3 * scaleItem && rockX == playerX)
             {
                 alert("You lose. Score: " + score);
-                document.location.reload(true);
+                rockX = getRandomInt(4);
+                rockY = -scaleItem;
+                rockId = getRandomInt(2);
+                diamondX = getRandomInt(4);
+                diamondY = -scaleItem;
+                playerX  = getRandomInt(4);
             }
             if(diamondY + scaleItem > 2 * scaleItem && diamondY < 3 * scaleItem && diamondX == playerX)
             {
