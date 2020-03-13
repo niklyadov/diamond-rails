@@ -60,10 +60,28 @@ document.addEventListener('keydown', function(event)
       break;
     }
   });
+function ClickAt(x,y, width){
+    if (pause){
+      pause = !pause;
+    }
+    if (x < width/2 && playerX > 0){
+        playerX--;
+    }
+    else if (x > width/2 && playerX < 3){
+        playerX++;
+    }
+}
 document.addEventListener("DOMContentLoaded", function ()
 {
     canvas = document.getElementById('myCanvas');
     context = canvas.getContext("2d");
+
+    //при клике мышью
+    canvas.onclick = function(e)
+    {
+      var rect = canvas.getBoundingClientRect();
+      ClickAt(e.clientX - rect.left, e.clientY - rect.top, rect.width);
+    };
 
     context.canvas.width = scaleItem * 4;
     context.canvas.height = (scaleItem-1) * 4;
