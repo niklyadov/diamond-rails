@@ -1,16 +1,15 @@
-
-var context = null;
-var canvas = null;
-var scaleItem = 32;
-var playerX  = getRandomInt(4);
-var score = 0;
-var pause = true;
+let cnvContext = null;      // Canvas context
+let canvas = null;          // Canvas
+let itemScalePx = 32;       // a size for object (32x32px default)
+let playerX  = getRandomInt(4);
+let score = 0;        // current score
+let pause = true;     // game in pause
 
 function loadImages(sources, callback)
 {
-    var images = {};
-    var loadedImages = 0;
-    var numImages = 0;
+    let images = {};
+    let loadedImages = 0;
+    let numImages = 0;
     for(var src in sources)
     {
       numImages++;
@@ -47,115 +46,131 @@ document.addEventListener('keydown', function(event)
 {
     switch (event.code )
     {
-      case 'ArrowLeft':
-        if(playerX > 0)
-            playerX--;
-      break;
-      case 'ArrowRight':
-        if(playerX < 3)
-            playerX++;
-      break;
-      default:
-              pause = !pause;
-      break;
+        case 'KeyA':        //  нажатие влево
+        case 'ArrowLeft':
+            if(playerX > 0 && !pause)
+                playerX--;      // перемещение по x
+            break;
+
+        case 'KeyD':        //  нажатие вправо
+        case 'ArrowRight':
+            if(playerX < 3  && !pause)
+                playerX++;     // перемещение по x
+            break;
+
+        case 'KeyP':        // установка/снятие паузы только на кнопку P
+             pause = !pause;
+            break;
+
+        default:            // снятие с паузы на любую другую кнопку
+              pause = false;
+            break;
     }
-  });
-function ClickAt(x,y, width){
-    if (pause){
-      pause = !pause;
-    }
-    if (x < width/2 && playerX > 0){
+});
+
+
+function ClickAt(x, y, width)
+{
+    if (pause)
+      pause = false;
+
+    if (x < width / 2 && playerX > 0)
+    {
         playerX--;
     }
-    else if (x > width/2 && playerX < 3){
+    else if (x > width / 2 && playerX < 3)
+    {
         playerX++;
     }
 }
+
 document.addEventListener("DOMContentLoaded", function ()
 {
     canvas = document.getElementById('myCanvas');
-    context = canvas.getContext("2d");
+    cnvContext = canvas.getContext("2d");
 
     //при клике мышью
     canvas.onclick = function(e)
     {
-      var rect = canvas.getBoundingClientRect();
-      ClickAt(e.clientX - rect.left, e.clientY - rect.top, rect.width);
+        let rect = canvas.getBoundingClientRect();
+        ClickAt(e.clientX - rect.left, e.clientY - rect.top, rect.width);
     };
 
-    context.canvas.width = scaleItem * 4;
-    context.canvas.height = (scaleItem-1) * 4;
-    context.font = "20px Arial";
-    context.fillStyle = "#84ffff";
-    context.textAlign = "center";
+    cnvContext.canvas.width = itemScalePx * 4;
+    cnvContext.canvas.height = (itemScalePx-1) * 4;
+    cnvContext.font = "20px Arial";
+    cnvContext.fillStyle = "#84ffff";
+    cnvContext.textAlign = "center";
 
-    var dy = 2;
-    var rockY = -scaleItem;
-    var diamondY = scaleItem;
-    var rockX = getRandomInt(4);
-    var diamondX = getRandomInt(4);
+    let dy = 2;
+    let rockY = -itemScalePx;
+    let diamondY = itemScalePx;
+    let rockX = getRandomInt(4);
+    let diamondX = getRandomInt(4);
 
-    var rockId = getRandomInt(2);
+    let rockId = getRandomInt(2);
 
     setInterval(function()
     {
-        if(pause)
-        {
-            return;
-        }
-        rockY    += 3;
-        diamondY += 2;
-
         loadImages(sources, function(images)
         {
-            context.clearRect(0, 0, canvas.width, canvas.height);
+            cnvContext.clearRect(0, 0, canvas.width, canvas.height);
 
-            for(var x = 0; x < 4; x++)
-            {   for(var y = 0; y < 4; y++)
+            for(let x = 0; x < 4; x++)
+            {   for(let y = 0; y < 4; y++)
                 {
-                    context.drawImage(images.rail, x * scaleItem, y * scaleItem + dy - 2, scaleItem, scaleItem);
+                    cnvContext.drawImage(images.rail, x * itemScalePx, y * itemScalePx + dy - 2, itemScalePx, itemScalePx);
                 }
             }
 
-            context.drawImage(images.player, playerX * scaleItem, 2 * scaleItem, scaleItem, scaleItem);
-            context.drawImage((rockId == 0) ? images.rock0 : images.rock1, rockX * scaleItem, rockY, scaleItem, scaleItem);
-            context.drawImage(images.diamond, diamondX * scaleItem, diamondY, scaleItem, scaleItem);
+            cnvContext.drawImage(images.player, playerX * itemScalePx, 2 * itemScalePx, itemScalePx, itemScalePx);
+            cnvContext.drawImage((rockId === 0) ? images.rock0 : images.rock1, rockX * itemScalePx, rockY, itemScalePx, itemScalePx);
+            cnvContext.drawImage(images.diamond, diamondX * itemScalePx, diamondY, itemScalePx, itemScalePx);
 
-            context.fillText(score, (playerX * scaleItem) + scaleItem/2, (3 * scaleItem) - scaleItem / 4);
+            cnvContext.fillText(score, (playerX * itemScalePx) + itemScalePx/2, (3 * itemScalePx) - itemScalePx / 4);
 
-            if(rockY > canvas.height)
-            {
-                rockX = getRandomInt(4);
-                rockY = -scaleItem;
-                rockId = getRandomInt(2);
-            }
-            if(diamondY > canvas.height || (rockY + scaleItem/2 > diamondY && rockY < diamondY + scaleItem/2 && rockX == diamondX))
-            {
-                diamondX = getRandomInt(4);
-                diamondY = -scaleItem;
-            }
-
-            dy = -dy;
-
-            if(rockY + scaleItem > 2 * scaleItem && rockY < 3 * scaleItem && rockX == playerX)
-            {
-                //alert("You lose. Score: " + score);
-                rockX       = getRandomInt(4);
-                rockY       = -scaleItem;
-                diamondX    = getRandomInt(4);
-                diamondY    = -scaleItem;
-                rockId      = getRandomInt(2);
-                playerX     = getRandomInt(4);
-                score       = 0;
-                dy          = 2;
-                pause       = true;
-            }
-            if(diamondY + scaleItem > 2 * scaleItem && diamondY < 3 * scaleItem && diamondX == playerX)
-            {
-                score++;
-                diamondX = getRandomInt(4);
-                diamondY = -scaleItem;
-            }
         });
+
+        if (pause) return;
+
+        rockY    += 3;
+        diamondY += 2;
+
+
+        if(rockY > canvas.height)
+        {
+            rockX = getRandomInt(4);
+            rockY = -itemScalePx;
+            rockId = getRandomInt(2);
+        }
+        if(diamondY > canvas.height || (rockY + itemScalePx/2 > diamondY && rockY < diamondY + itemScalePx/2 && rockX === diamondX))
+        {
+            diamondX = getRandomInt(4);
+            diamondY = -itemScalePx;
+        }
+
+        dy = -dy;
+
+        if(rockY + itemScalePx > 2 * itemScalePx && rockY < 3 * itemScalePx && rockX === playerX)
+        {
+            //alert("You lose. Score: " + score);
+            rockX       = getRandomInt(4);
+            rockY       = -itemScalePx;
+            diamondX    = getRandomInt(4);
+            diamondY    = -itemScalePx;
+            rockId      = getRandomInt(2);
+            playerX     = getRandomInt(4);
+            score       = 0;
+            dy          = 2;
+            pause       = true;
+        }
+        if(diamondY + itemScalePx > 2 * itemScalePx && diamondY < 3 * itemScalePx && diamondX === playerX)
+        {
+            score++;
+            diamondX = getRandomInt(4);
+            diamondY = -itemScalePx;
+        }
+
+
     }, 50);
 });
