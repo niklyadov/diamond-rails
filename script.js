@@ -39,11 +39,11 @@ function loadImages(sources, callback)
 
   let sources =
   {
-    rail:     'https://anchovys.github.io/diamond-rails/tex/rail.png',
-    rock0:    'https://anchovys.github.io/diamond-rails/tex/rock0.png',
-    rock1:    'https://anchovys.github.io/diamond-rails/tex/rock1.png',
-    player:   'https://anchovys.github.io/diamond-rails/tex/player.png',
-    diamond:  'https://anchovys.github.io/diamond-rails/tex/diamond.png'
+    rail:     'https://niklyadov.github.io/diamond-rails/tex/rail.png',
+    rock0:    'https://niklyadov.github.io/diamond-rails/tex/rock0.png',
+    rock1:    'https://niklyadov.github.io/diamond-rails/tex/rock1.png',
+    player:   'https://niklyadov.github.io/diamond-rails/tex/player.png',
+    diamond:  'https://niklyadov.github.io/diamond-rails/tex/diamond.png'
   };
 
   function getRandomInt(max)
